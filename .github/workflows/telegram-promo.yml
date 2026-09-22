@@ -1,9 +1,11 @@
 name: Telegram promo every 3 hours
 
+
 on:
   schedule:
     - cron: "0 */3 * * *"
   workflow_dispatch:
+
 
 jobs:
   send-promo:
@@ -16,18 +18,22 @@ jobs:
           MESSAGE: |
             📊 <b>صقور السوق | Saudi • US</b>
 
+
             عايز تحليل سهم؟ ابعت اسم السهم واكتب جنبه:
             🇸🇦 <b>سعودي</b> أو 🇺🇸 <b>أمريكي</b>
 
+
             📩 ولو عايز تتواصل مع الإدارة، اكتب كلمة <b>تم</b> فقط، وهيتم التواصل معاك في أقرب وقت.
+
 
             ⚠️ ممنوع إرسال الروابط أو الإعلانات داخل الجروب حفاظًا على الأعضاء.
         run: |
           test -n "$BOT_TOKEN"
           test -n "$TARGET_CHAT_ID"
-          curl --fail --silent --show-error \
+          curl --fail-with-body --silent --show-error \
             --request POST \
             "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TARGET_CHAT_ID}" \
             --data-urlencode "parse_mode=HTML" \
             --data-urlencode "text=${MESSAGE}"
+
